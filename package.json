@@ -1,5 +1,5 @@
 {
-  "name": "jecvoting",
+  "name": "sevoting",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,8 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.5"
+    "@openzeppelin/contracts": "^4.7.0",
+    "@walletconnect/web3-provider": "^1.8.0",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "ipfs-http-client": "^60.0.1",
+    "next": "12.2.1",
+    "react": "18.2.0",
+    "react-countdown": "^2.3.2",
+    "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.2",
+    "react-icons": "^4.4.0",
+    "web3modal": "^1.9.12"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.22.8"
   }
 }
