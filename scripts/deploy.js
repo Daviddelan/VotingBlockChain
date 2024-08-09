@@ -8,6 +8,8 @@ async function main() {
   console.log("VotingContract deployed to:", votingContract.address);
 }
 
+//npx hardhat run scripts/deploy.js --network polygon_amoy
+
 main()
   .then(() => process.exit(0))
   .catch((error) => {

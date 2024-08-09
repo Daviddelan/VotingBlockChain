@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
@@ -18,7 +18,7 @@ const allowedVoters = () => {
   });
 
   const router = useRouter();
-  const { uploadToIPFS, createVoter } = useContext(VotingContext);
+  const { uploadToIPFS, createVoter, voterArray, getAllVoterData } = useContext(VotingContext);
 
   const onDrop = useCallback(async (acceptedFiles) => {
     const url = await uploadToIPFS(acceptedFiles[0]);
@@ -30,6 +30,10 @@ const allowedVoters = () => {
     accept: "image/*",
     maxSize: 5000000,
   });
+
+  useEffect(() => {
+    getAllVoterData(); 
+  }, []);
 
   return (
     <div className={Style.createVoter}>
@@ -49,6 +53,20 @@ const allowedVoters = () => {
               <h4>Create candidate For the Voting Process</h4>
               <p>JES Developers is a community of developers who are passionate about building Ethereum ecosystems.</p>
               <p className={Style.sideInfo_para}>Contract Candidate</p>
+            </div>
+            <div className={Style.card}>
+              {voterArray.map((el, i) => (
+                <div key={i + 1} className={Style.card_box}>
+                  <div className={Style.image}>
+                    <img src={el[4]} alt="Voter Image" />
+                  </div>
+                  <div className={Style.card_info}>
+                    <p>{el[1]}</p>
+                    <p>Address: {el[3].slice(0, 10)}...</p>
+
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

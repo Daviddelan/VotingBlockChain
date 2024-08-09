@@ -36,6 +36,7 @@ contract VotingContract {
 
     mapping(address => Candidate) public candidates;
 
+    
     struct Voter {
         uint256 voter_voterId;
         string voter_name;
@@ -62,6 +63,13 @@ contract VotingContract {
     address[] public votersAddress;
     mapping(address => Voter) public voters;
 
+    
+    
+    
+    
+    
+    
+    
     constructor() {
         votingOrganizer = msg.sender;
     }
@@ -74,14 +82,15 @@ contract VotingContract {
         Candidate storage candidate = candidates[_address];
         candidate.age = _age;
         candidate.name = _name;
+        candidate.candidateId = idnumber;
         candidate.image = _image;
+        candidate.voteCount = 0;
         candidate._address = _address;
         candidate.ipfs = _ipfs;
-        candidate.voteCount = 0;
-        candidate.candidateId = idnumber;
+        
 
         candidateAddress.push(_address);
-        emit CandidateCreate(idnumber, _age, _name, _image, 0, _address, _ipfs);
+        emit CandidateCreate(idnumber, _age, _name, _image, candidate.voteCount, _address, _ipfs);
     }
 
     function getCandidate() public view returns(address[] memory) {
@@ -112,13 +121,13 @@ contract VotingContract {
 
     require(voter.voter_allowed == 0, "Voter already exists");
 
-    voter.voter_voterId = idnumber;
+    voter.voter_allowed = 1;
     voter.voter_name = _name;
     voter.voter_image = _image;
     voter.voter_address = _address;
-    voter.voter_allowed = 1;
+    voter.voter_voterId = idnumber;
+    voter.voter_vote = 1000;
     voter.voter_voted = false;
-    voter.voter_vote = 0;
     voter.voter_ipfs = _ipfs;
 
     votersAddress.push(_address);
@@ -145,17 +154,23 @@ contract VotingContract {
     }
 
     function getVoterData(address _address) public view returns(uint256, string memory, string memory, address, string memory, uint256, bool) {
-        Voter storage voter = voters[_address];
         return (
-            voter.voter_voterId,
-            voter.voter_name,
-            voter.voter_image,
-            voter.voter_address,
-            voter.voter_ipfs,
-            voter.voter_allowed,
-            voter.voter_voted
+            voters[_address].voter_voterId,
+            voters[_address].voter_name,
+            voters[_address].voter_image,
+            voters[_address].voter_address,
+            voters[_address].voter_ipfs,
+            voters[_address].voter_allowed,
+            voters[_address].voter_voted
         );
     }
+
+    function getVotedVoterList() public view returns (address[] memory){
+        return votedVoters;
+    }
+
+
+
 
     function getAllVoterData() public view returns (Voter[] memory) {
         Voter[] memory allVoters = new Voter[](votersAddress.length);

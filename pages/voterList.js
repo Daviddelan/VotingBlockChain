@@ -1,44 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+import React, {usetate, useEffect, useContext} from "react";
+
+import VoterCard from "../components/VoterCard/VoterCard";
+import Style from '../styles/voterList.module.css'
 import { VotingContext } from "../context/Voter";
+ 
 
 const VoterList = () => {
-  const { fetchAllVoterData, voters } = useContext(VotingContext);
-
-  useEffect(() => {
-    fetchAllVoterData();
+  const { getAllVoterData, voterArray } = useContext(VotingContext);
+  useEffect(() => { 
+    getAllVoterData();
   }, []);
-
   return (
-    <div>
-      <h1>Voter List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Address</th>
-            <th>IPFS</th>
-            <th>Allowed</th>
-            <th>Voted</th>
-          </tr>
-        </thead>
-        <tbody>
-          {voters.map((voter, index) => (
-            <tr key={index}>
-              <td>{voter.voter_voterId.toString()}</td>
-              <td>{voter.voter_name}</td>
-              <td><img src={voter.voter_image} alt={voter.voter_name} width="50" height="50" /></td>
-              <td>{voter.voter_address}</td>
-              <td>{voter.voter_ipfs}</td>
-              <td>{voter.voter_allowed.toString()}</td>
-              <td>{voter.voter_voted.toString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="Style.voterList">
+      <VoterCard voterArray={voterArray}/>
     </div>
-  );
+  )
 };
 
 export default VoterList;
